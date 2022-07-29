@@ -243,3 +243,95 @@ let boxarts = [
     url: "http://cdn-0.nflximg.com/images/2891/Fracture425.jpg",
   },
 ];
+
+// return the largest object to find the largest object
+// multiply width times height
+
+const imperativeBox = (arr) => {
+  let accumulator = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    const element = arr[i];
+
+    if (
+      element.width * element.height >
+      accumulator.width * accumulator.height
+    ) {
+      accumulator = element;
+    }
+  }
+  return accumulator;
+};
+// console.log(imperativeBox);
+
+const declarativeBox = boxarts.reduce((accumulator, element) => {
+  if (element.width * element.height > accumulator.width * accumulator.height) {
+    accumulator = element;
+  }
+  return accumulator;
+});
+
+// console.log(declarativeBox)
+
+//! how can we replace the map method with reduce.
+
+//! let's return a list of URLs
+//! map iterates through
+
+const boxMap = boxarts.map((box) => box.url);
+// console.log(boxMap);
+const boxMap2 = boxarts.map(({ url }) => url);
+// console.log(boxMap2);
+
+// reduce takes four arguments.
+// first is accumulator which auto starts at the first value of the array.
+// second is the initial value.
+
+const boxMapReduce = boxarts.reduce((accumulator, box) => {
+  // console.log(accumulator);
+  accumulator.push(box.url);
+  return accumulator;
+}, []);
+
+// console.log(boxMapReduce);
+
+const boxMapReduce2 = boxarts.reduce(
+  (accumulator, { url }) => [...accumulator, url],
+  []
+);
+// console.log(boxMapReduce2);
+
+//! imperative is replacing instead of pushing
+const tryNonMutate = (arr) => {
+  let accumulator = [];
+  for (const element of arr) {
+    accumulator = [...accumulator, element.url];
+  }
+  return accumulator;
+};
+
+// console.log(tryNonMutate(boxarts));
+
+//! how about filter?
+
+// let's say we want to return only items with a width greater than 250;
+
+const boxFilter = boxarts.filter((box) => box.width > 250);
+// console.log(boxFilter);
+
+const boxReduceFilter = boxarts.reduce((accumulator, box) => {
+  if (box.width > 250) {
+    accumulator.push(box);
+  }
+  return accumulator;
+}, []);
+
+// console.log(boxReduceFilter);
+
+const shorterBoxReduceFilter = boxarts.reduce((accumulator, box) => {
+  if (box.width > 250) {
+    return [...accumulator, box];
+  }
+  return accumulator;
+}, []);
+
+// console.log(shorterBoxReduceFilter);

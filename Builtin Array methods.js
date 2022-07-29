@@ -423,8 +423,45 @@ const boxMapReduce = boxarts.reduce((accumulator, box) => {
 
 // console.log(boxMapReduce);
 
+//? using spread operator
 const boxMapReduce2 = boxarts.reduce(
   (accumulator, { url }) => [...accumulator, url],
   []
 );
-console.log(boxMapReduce2);
+// console.log(boxMapReduce2);
+
+//! imperative is replacing instead of pushing
+const tryNonMutate = (arr) => {
+  let accumulator = [];
+  for (const element of arr) {
+    accumulator = [...accumulator, element.url];
+  }
+  return accumulator;
+};
+
+// console.log(tryNonMutate(boxarts));
+
+//! how about filter?
+
+// let's say we want to return only items with a width greater than 250;
+
+const boxFilter = boxarts.filter((box) => box.width > 250);
+// console.log(boxFilter);
+
+const boxReduceFilter = boxarts.reduce((accumulator, box) => {
+  if (box.width > 250) {
+    accumulator.push(box);
+  }
+  return accumulator;
+}, []);
+
+// console.log(boxReduceFilter);
+
+const shorterBoxReduceFilter = boxarts.reduce((accumulator, box) => {
+  if (box.width > 250) {
+    return [...accumulator, box];
+  }
+  return accumulator;
+}, []);
+
+console.log(shorterBoxReduceFilter);
