@@ -145,3 +145,101 @@ console.log(countOccurrences(["a", "b", "c", "b", "a"]));
 //? declarative we don't see what's going on under the hood we just declare the method. (for ex. .map)
 //? imperative is when we tell the machine what we want it to do. (for ex. for loops)
 //? reduce is meant to return one value.
+
+//let's say we want to return the sum of all the numbers
+
+const numArray = [1, 2, 3, 4];
+
+const imperativeSum = (arr) => {
+  let accumulator = 0;
+  for (let element of arr) {
+    accumulator += element;
+  }
+  return accumulator;
+};
+
+const imperativeSum2 = (arr) => {
+  let accumulator = arr[0];
+  for (let i = 0; i < arr.length; i++) {
+    const element = arr[i];
+    accumulator += element;
+  }
+  return accumulator;
+};
+// console.log(imperativeSum(numArray));
+// console.log(imperativeSum2(numArray)); //should log 10 but logging 11
+
+// reduce takes four arguments.
+// first is accumulator which auto starts at the first value of the array.
+// second is the current value in the loop aka the element.
+// third is the index (optional)
+// fourth is the array (optional)
+
+//! accumulator initializes with the first value.
+//! element begins with the second value.
+const declarativeSum = numArray.reduce(
+  (accumulator, element) => accumulator + element
+);
+
+// console.log(declarativeSum);
+
+const numArray2 = [1, 2, 3, 4];
+
+// find the max number in the array
+
+//!old way
+
+const imperativeMax = (arr) => {
+  let accumulator = null;
+
+  for (const element of arr) {
+    if (element > accumulator) accumulator = element;
+  }
+  return accumulator;
+};
+
+// console.log(imperativeMax(numArray2))
+
+//! easiest way
+const max = Math.max(...numArray2);
+// console.log(max);
+
+//* what if you can't use math methods or for loops (interview scenarios)
+const declarativeMax = numArray2.reduce((accumulator, element) => {
+  if (element > accumulator) accumulator = element;
+  return accumulator;
+});
+console.log(declarativeMax);
+
+//! in reduce the variables for the arguments will often look like this
+//? acc is the accumulator
+//? curr is the currentValue
+
+const declarativeMax2 = numArray2.reduce((acc, curr) => {
+  if (curr > acc) return curr;
+  return acc;
+});
+console.log(declarativeMax2);
+
+let boxarts = [
+  {
+    width: 200,
+    height: 200,
+    url: "http://cdn-0.nflximg.com/images/2891/Fracture200.jpg",
+  },
+  {
+    width: 150,
+    height: 200,
+    url: "http://cdn-0.nflximg.com/images/2891/Fracture150.jpg",
+  },
+  {
+    width: 300,
+    height: 200,
+    url: "http://cdn-0.nflximg.com/images/2891/Fracture300.jpg",
+  },
+  {
+    width: 425,
+    height: 150,
+    url: "http://cdn-0.nflximg.com/images/2891/Fracture425.jpg",
+  },
+];

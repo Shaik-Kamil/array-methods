@@ -127,7 +127,7 @@ const higherThan10 = nums.filter((num) => {
 // console.log(higherThan10)
 
 //! filter also takes in a callback function. filter will return a new array that "filters" the array for any element that matches the condition we are looking for.
-//* filter()
+//* filter() doesn't mutate the array;
 // const moreThan5Seasons = characters.filter((char) => {
 //     return char.seasons > 5
 // });
@@ -179,7 +179,7 @@ const hale = characters.find(({ name }) => name === "Charlotte Hale");
 
 // console.log(hale);
 
-//* sort()
+//* sort() mutates the array
 const letters = ["r", "b", "o", "a", "q"];
 //*take a look at basic sort with string
 const sortedLetters = letters.sort();
@@ -196,9 +196,9 @@ const sortedNumbers1 = sortedNums1.sort();
 //! and compares it to the first character in each item
 
 //* check the unicode number for each character *** lexicographical comparison
-sortedNums1.forEach((num) =>
-  console.log(`{num}: ${String(num).charCodeAt(0)}`)
-);
+// sortedNums1.forEach((num) =>
+//   console.log(`{num}: ${String(num).charCodeAt(0)}`)
+// );
 
 //! sort comes with a comparator function that allows us to return a number
 //! its a callback function and in the function we compare two unicodes to see which one is greater
@@ -339,3 +339,92 @@ const declarativeMax = numArray2.reduce((accumulator, element) => {
   return accumulator;
 });
 console.log(declarativeMax);
+
+//! in reduce the variables for the arguments will often look like this
+//? acc is the accumulator
+//? curr is the currentValue
+
+const declarativeMax2 = numArray2.reduce((acc, curr) => {
+  if (curr > acc) return curr;
+  return acc;
+});
+console.log(declarativeMax2);
+
+let boxarts = [
+  {
+    width: 200,
+    height: 200,
+    url: "http://cdn-0.nflximg.com/images/2891/Fracture200.jpg",
+  },
+  {
+    width: 150,
+    height: 200,
+    url: "http://cdn-0.nflximg.com/images/2891/Fracture150.jpg",
+  },
+  {
+    width: 300,
+    height: 200,
+    url: "http://cdn-0.nflximg.com/images/2891/Fracture300.jpg",
+  },
+  {
+    width: 425,
+    height: 150,
+    url: "http://cdn-0.nflximg.com/images/2891/Fracture425.jpg",
+  },
+];
+
+// return the largest object to find the largest object
+// multiply width times height
+
+const imperativeBox = (arr) => {
+  let accumulator = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    const element = arr[i];
+
+    if (
+      element.width * element.height >
+      accumulator.width * accumulator.height
+    ) {
+      accumulator = element;
+    }
+  }
+  return accumulator;
+};
+// console.log(imperativeBox);
+
+const declarativeBox = boxarts.reduce((accumulator, element) => {
+  if (element.width * element.height > accumulator.width * accumulator.height) {
+    accumulator = element;
+  }
+  return accumulator;
+});
+
+// console.log(declarativeBox)
+
+//! how can we replace the map method with reduce.
+
+//! let's return a list of URLs
+//! map iterates through
+
+const boxMap = boxarts.map((box) => box.url);
+// console.log(boxMap);
+const boxMap2 = boxarts.map(({ url }) => url);
+// console.log(boxMap2);
+
+// reduce takes four arguments.
+// first is accumulator which auto starts at the first value of the array.
+// second is the initial value.
+
+const boxMapReduce = boxarts.reduce((accumulator, box) => {
+  // console.log(accumulator);
+  accumulator.push(box.url);
+  return accumulator;
+}, []);
+
+// console.log(boxMapReduce);
+
+const boxMapReduce2 = boxarts.reduce(
+  (accumulator, { url }) => [...accumulator, url],
+  []
+);
+console.log(boxMapReduce2);
